@@ -1,0 +1,93 @@
+# Compiled class files
+target/
+
+# Compiled Maven project files
+.classpath
+.project
+.settings/
+
+# Log files
+*.log
+
+# IntelliJ IDEA
+.idea/
+
+# Eclipse
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+
+# Gradle files
+.gradle/
+build/
+
+# Spring Boot specific
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Maven Wrapper
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# Spring Tool Suite (STS)
+.sts4/
+
+# Other IDE specific files
+.vscode/
+
+# Thumbnails
+Thumbs.db
+ehthumbs.db
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+desktop.ini
+
+# Gradle Cache
+.gradle/
+build/
+
+# Compiled class files
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Maven generated files #
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# IDE files #
+*.iml
+*.ipr
+*.iws
+.idea/
+.settings/
+*.launch
+
+# JUnit
+/.classpath
+/.project
+/.settings/
+/.factorypath
+
+# Log files
+*.log
+
+# MacOS files
+.DS_Store
