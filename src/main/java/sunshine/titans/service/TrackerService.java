@@ -1,5 +1,17 @@
 package sunshine.titans.service;
 
-public class TrackerService {
+import sunshine.titans.model.Stock;
 
+public interface TrackerService {
+	Iterable<Stock> getPortfolio();
+	
+	Stock getStockById(int id);
+	
+	Stock addNewStock(Stock stock);
+		
+	void deleteStock(int id);
+	
+	void deleteStock(Stock stock);
+	
+	Stock updateStock(Stock stock);
 }
