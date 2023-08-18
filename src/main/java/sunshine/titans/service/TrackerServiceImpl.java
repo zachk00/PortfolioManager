@@ -41,6 +41,8 @@ public class TrackerServiceImpl implements TrackerService{
 
 	@Override
 	public void deleteStock(int id) {
+		//TODO add error handling in case stock doesnt exists
+	
 		Stock deleteStock = dao.findById(id).get();
 		deleteStock(deleteStock);
 		
