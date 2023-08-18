@@ -14,7 +14,13 @@ import java.io.Serializable;
 public class Stock implements Serializable {
 
 
-    @Id
+    @Override
+	public String toString() {
+		return "Stock [id=" + id + ", ticker=" + ticker + ", purchasePrice=" + purchasePrice + ", quantity=" + quantity
+				+ "]";
+	}
+
+	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
