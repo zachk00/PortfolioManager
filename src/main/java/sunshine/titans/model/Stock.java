@@ -10,8 +10,6 @@ import jakarta.persistence.Table;
 
 import java.io.Serializable;
 
-//Adding caching
-//@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Entity @Table(name="portfolio")//table name
 public class Stock implements Serializable {
 
