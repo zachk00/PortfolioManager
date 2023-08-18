@@ -22,7 +22,7 @@ public class Stock implements Serializable {
     @Column(name="ticker")
     private String ticker;
     
-    @Column(name="ticker")
+    @Column(name="purchasePrice")
     private Double purchasePrice;
     
     @Column(name="quantity")

@@ -2,7 +2,8 @@ package sunshine.titans.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import sunshine.titans.model.Stock;
 import sunshine.titans.repo.StockRepository;
@@ -16,7 +17,7 @@ public class TrackerServiceImpl implements TrackerService{
 	private StockRepository dao;
 	
 	
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Iterable<Stock> getPortfolio() {
 		
 		return dao.findAll();
@@ -39,20 +40,20 @@ public class TrackerServiceImpl implements TrackerService{
 
 	@Override
 	public void deleteStock(int id) {
-		// TODO Auto-generated method stub
+		Stock deleteStock = dao.findById(id).get();
+		deleteStock(deleteStock);
 		
 	}
 
 	@Override
 	public void deleteStock(Stock stock) {
-		// TODO Auto-generated method stub
+		dao.delete(stock);
 		
 	}
 
 	@Override
 	public Stock updateStock(Stock stock) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.save(stock);
 	}
 
 }
