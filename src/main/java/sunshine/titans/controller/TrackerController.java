@@ -8,16 +8,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import sunshine.titans.model.Stock;
+
 import sunshine.titans.service.TrackerService;
 
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/Tracker-Controller") //Renamed
+@RequestMapping("/api/Tracker-Controller")
 @CrossOrigin // allows requests from all domains
-
 public class TrackerController {
+
     private static Logger logger = LogManager.getLogger(TrackerController.class);
 
     @Autowired
@@ -31,7 +33,7 @@ public class TrackerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Stock getStockByID(@PathVariable("id") int id) { //TrackerController or Service?
+    public Stock getStockById(@PathVariable("id") int id) {
         return service.getStockById(id);
     }
 
@@ -48,12 +50,12 @@ public class TrackerController {
 
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public void deleteCd(@PathVariable("id") int id) {
+    public void deleteStock(@PathVariable("id") int id) {
         service.deleteStock(id);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public void deleteCd(@RequestBody Stock stock) {
+    public void deleteStock(@RequestBody Stock stock) {
         service.deleteStock(stock);
     }
 

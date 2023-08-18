@@ -82,7 +82,7 @@ public class TestTrackerController {
     //@Disabled
     @Test
     public void testStockById() {
-        Stock stock = controller.getStockByID(1);
+        Stock stock = controller.getStockById(1);
         logger.debug(stock.toString());
         assertNotNull(stock);
     }
