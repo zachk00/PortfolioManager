@@ -22,7 +22,8 @@ public class TrackerServiceImpl implements TrackerService{
 		
 		return dao.findAll();
 	}
-
+		
+	
 	@Override
 	public Stock getStockById(int id) {
 		Optional<Stock> stockOptional = dao.findById(id);
