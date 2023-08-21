@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import sunshine.titans.model.Stock;
+import sunshine.titans.model.WatchlistStock;
 import sunshine.titans.repo.StockRepository;
+import sunshine.titans.repo.WatchlistRepository;
 
 import java.util.Optional;
 
@@ -14,19 +16,22 @@ import java.util.Optional;
 public class TrackerServiceImpl implements TrackerService{
 	//TODO logging
 	@Autowired
-	private StockRepository dao;
+	private StockRepository stockDAO;
+	
+	@Autowired
+	private WatchlistRepository watchlistDAO;
 	
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Iterable<Stock> getPortfolio() {
 		
-		return dao.findAll();
+		return stockDAO.findAll();
 	}
 		
 	
 	@Override
 	public Stock getStockById(int id) {
-		Optional<Stock> stockOptional = dao.findById(id);
+		Optional<Stock> stockOptional = stockDAO.findById(id);
 		if (stockOptional.isPresent()) {
 			return stockOptional.get();
 		}
@@ -36,27 +41,44 @@ public class TrackerServiceImpl implements TrackerService{
 	@Override
 	public Stock addNewStock(Stock stock) {
 		stock.setId(0);
-		return dao.save(stock);
+		return stockDAO.save(stock);
 	}
 
 	@Override
 	public void deleteStock(int id) {
 		//TODO add error handling in case stock doesnt exists
 	
-		Stock deleteStock = dao.findById(id).get();
+		Stock deleteStock = stockDAO.findById(id).get();
 		deleteStock(deleteStock);
 		
 	}
 
 	@Override
 	public void deleteStock(Stock stock) {
-		dao.delete(stock);
+		stockDAO.delete(stock);
 		
 	}
 
 	@Override
 	public Stock updateStock(Stock stock) {
-		return dao.save(stock);
+		return stockDAO.save(stock);
+	}
+
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Iterable<WatchlistStock> getWatchlist() {
+		return watchlistDAO.findAll();
+	}
+
+	@Override
+	public void addToWaitlist(String ticker) {
+		WatchlistStock newWatchlistStock = new WatchlistStock(ticker);
+		watchlistDAO.save(newWatchlistStock);
+	}
+
+	@Override
+	public void removeStockFromWaitlist(String ticker) {
+		watchlistDAO.deleteByTicker(ticker);	
 	}
 
 }

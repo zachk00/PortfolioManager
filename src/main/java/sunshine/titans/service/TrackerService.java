@@ -1,6 +1,7 @@
 package sunshine.titans.service;
 
 import sunshine.titans.model.Stock;
+import sunshine.titans.model.WatchlistStock;
 
 public interface TrackerService {
 	Iterable<Stock> getPortfolio();
@@ -17,6 +18,13 @@ public interface TrackerService {
 	
 	//TODO
 	// watchlist table, need request,  need endpoint, need entity
+	
+	Iterable<WatchlistStock> getWatchlist();
+	
+	void addToWaitlist(String ticker);
+	
+	void removeStockFromWaitlist(String ticker);
+	
 	
 	
 	// new routes are needed for update, delete, and todo services

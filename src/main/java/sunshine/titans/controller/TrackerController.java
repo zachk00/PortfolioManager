@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import sunshine.titans.model.Stock;
-
+import sunshine.titans.model.WatchlistStock;
 import sunshine.titans.service.TrackerService;
 
 import java.util.Collection;
@@ -63,5 +63,25 @@ public class TrackerController {
     public void addCd(@RequestBody Stock stock) {
         service.addNewStock(stock);
     }
+    
+    // watchlist methods
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/watchlist")
+    public Iterable<WatchlistStock> getWatchlist() {
+        return service.getWatchlist();
+    }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/watchlist/add")
+    public ResponseEntity<String> addToWatchlist(@RequestBody String ticker) {
+        service.addToWaitlist(ticker);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Stock added to watchlist");
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/watchlist/remove/{ticker}")
+    public ResponseEntity<String> removeFromWatchlist(@PathVariable String ticker) {
+        service.removeStockFromWaitlist(ticker);
+        return ResponseEntity.status(HttpStatus.OK).body("Stock removed from watchlist");
+    }
+    
+    
 }
