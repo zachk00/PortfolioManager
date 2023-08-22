@@ -17,20 +17,8 @@ public class WatchlistStock {
 	}
 	
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-    private Integer id;
-	
 	@Column(name="ticker")
 	private String ticker;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getTicker() {
 		return ticker;
@@ -40,9 +28,4 @@ public class WatchlistStock {
 		this.ticker = ticker;
 	}
 
-	@Override
-	public String toString() {
-		return "WatchlistStock [id=" + id + ", ticker=" + ticker + "]";
-	}	
-	
 }

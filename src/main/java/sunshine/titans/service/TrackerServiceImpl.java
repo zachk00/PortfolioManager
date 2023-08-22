@@ -70,15 +70,28 @@ public class TrackerServiceImpl implements TrackerService{
 		return watchlistDAO.findAll();
 	}
 
-	@Override
+	@Transactional
 	public void addToWaitlist(String ticker) {
-		WatchlistStock newWatchlistStock = new WatchlistStock(ticker);
-		watchlistDAO.save(newWatchlistStock);
+		//WatchlistStock newWatchlistStock = new WatchlistStock(ticker);
+		
+		WatchlistStock newWatchlistStock = watchlistDAO.findByTicker(ticker);
+		
+		if (newWatchlistStock == null){
+			watchlistDAO.save(new WatchlistStock(ticker));	
+		}
+		
+		
+		
 	}
 
-	@Override
+	@Transactional
 	public void removeStockFromWaitlist(String ticker) {
-		watchlistDAO.deleteByTicker(ticker);	
+		try{
+			watchlistDAO.deleteByTicker(ticker);
+		}catch (Exception e) {
+		    e.printStackTrace();
+		}
+			
 	}
 
 }

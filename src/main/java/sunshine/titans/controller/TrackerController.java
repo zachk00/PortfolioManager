@@ -14,6 +14,7 @@ import sunshine.titans.model.WatchlistStock;
 import sunshine.titans.service.TrackerService;
 
 import java.util.Collection;
+import org.json.simple.JSONObject;
 
 @RestController
 @RequestMapping("/api/Tracker-Controller")
@@ -71,16 +72,23 @@ public class TrackerController {
         return service.getWatchlist();
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/watchlist/add")
+    @RequestMapping(method = RequestMethod.POST, value = "/watchlist/add{ticker}")
     public ResponseEntity<String> addToWatchlist(@RequestBody String ticker) {
+    	System.out.println(ticker);
         service.addToWaitlist(ticker);
         return ResponseEntity.status(HttpStatus.CREATED).body("Stock added to watchlist");
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/watchlist/remove/{ticker}")
     public ResponseEntity<String> removeFromWatchlist(@PathVariable String ticker) {
-        service.removeStockFromWaitlist(ticker);
-        return ResponseEntity.status(HttpStatus.OK).body("Stock removed from watchlist");
+        System.out.println(ticker);
+    	service.removeStockFromWaitlist(ticker);
+    	
+    	JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("message", "Stock removed from watchlist");
+    	
+    	
+        return ResponseEntity.status(HttpStatus.OK).body(jsonResponse.toString());
     }
     
     
