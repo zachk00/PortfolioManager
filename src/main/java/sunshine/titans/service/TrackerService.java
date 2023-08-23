@@ -1,6 +1,7 @@
 package sunshine.titans.service;
 
 import sunshine.titans.model.Stock;
+import sunshine.titans.model.Transaction;
 import sunshine.titans.model.WatchlistStock;
 
 public interface TrackerService {
@@ -28,7 +29,9 @@ public interface TrackerService {
 	
 	
 	// new routes are needed for update, delete, and todo services
-		
+	Stock addToPortfolio(Stock stock);
+
+    Transaction addTransaction(Transaction transaction);
 	
 	// new Backend services
 	

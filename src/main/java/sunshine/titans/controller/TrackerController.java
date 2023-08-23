@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import sunshine.titans.model.Stock;
+import sunshine.titans.model.Transaction;
 import sunshine.titans.model.WatchlistStock;
 import sunshine.titans.service.TrackerService;
 
@@ -89,6 +90,20 @@ public class TrackerController {
     	
     	
         return ResponseEntity.status(HttpStatus.OK).body(jsonResponse.toString());
+    }
+
+    //added request mappings for the search page.. 
+
+    @PostMapping("/portfolio/addToPortfolio")
+    public ResponseEntity<Stock> addStockToPortfolio(@RequestBody Stock stock) {
+        Stock addedStock = service.addToPortfolio(stock);
+        return new ResponseEntity<>(addedStock, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/transaction/addTransaction")
+    public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction) {
+        Transaction addedTransaction = service.addTransaction(transaction);
+        return new ResponseEntity<>(addedTransaction, HttpStatus.CREATED);
     }
     
     
