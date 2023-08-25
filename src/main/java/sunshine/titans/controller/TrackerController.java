@@ -126,7 +126,7 @@ public class TrackerController {
     @PutMapping("/portfolio/sellFromPortfolio")
     public ResponseEntity<Stock> sellFromPortfolio(@RequestBody Stock stock) {
 
-        Stock soldStock = service.sellFromPortfolio(stock);
+        Stock soldStock = trackerService.sellFromPortfolio(stock);
         return new ResponseEntity<>(soldStock, HttpStatus.CREATED);
     }
     
@@ -138,7 +138,7 @@ public class TrackerController {
     }
      @PostMapping("/transaction/sellTransaction")
     public ResponseEntity<Transaction> sellTransaction(@RequestBody Transaction transaction) {
-        Transaction addedTransaction = service.addTransaction(transaction);
+        Transaction addedTransaction = trackerService.addTransaction(transaction);
         return new ResponseEntity<>(addedTransaction, HttpStatus.CREATED);
     }
     
