@@ -5,9 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import sunshine.titans.model.BollingerBands;
 import sunshine.titans.model.Stock;
+import sunshine.titans.model.TimeSeriesData;
+import sunshine.titans.model.Transaction;
 import sunshine.titans.model.WatchlistStock;
 import sunshine.titans.repo.StockRepository;
+import sunshine.titans.repo.TransactionRepository;
 import sunshine.titans.repo.WatchlistRepository;
 
 import java.util.Optional;
@@ -20,6 +24,9 @@ public class TrackerServiceImpl implements TrackerService{
 	
 	@Autowired
 	private WatchlistRepository watchlistDAO;
+
+	@Autowired
+    private TransactionRepository transactionDAO;
 	
 	
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -40,7 +47,6 @@ public class TrackerServiceImpl implements TrackerService{
 
 	@Override
 	public Stock addNewStock(Stock stock) {
-		stock.setId(0);
 		return stockDAO.save(stock);
 	}
 
@@ -93,5 +99,16 @@ public class TrackerServiceImpl implements TrackerService{
 		}
 			
 	}
+
+	@Override
+    public Stock addToPortfolio(Stock stock) {
+        return stockDAO.save(stock);
+    }
+
+    @Override
+    public Transaction addTransaction(Transaction transaction) {
+        return transactionDAO.save(transaction);
+    }
+
 
 }

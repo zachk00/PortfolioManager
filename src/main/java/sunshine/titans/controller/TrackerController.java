@@ -1,6 +1,7 @@
 package sunshine.titans.controller;
-//import org.apache.log4j.Logger;
 import io.swagger.annotations.ApiOperation;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +10,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import sunshine.titans.model.BollingerBands;
+import sunshine.titans.model.BollingerData;
 import sunshine.titans.model.Stock;
 import sunshine.titans.model.TimeSeriesData;
+import sunshine.titans.model.Transaction;
 import sunshine.titans.model.WatchlistStock;
 import sunshine.titans.service.BollingerService;
 import sunshine.titans.service.TrackerService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.SortedMap;
+
 import org.json.simple.JSONObject;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @RestController
 @RequestMapping("/api/Tracker-Controller")
-@CrossOrigin // allows requests from all domains
+@CrossOrigin(origins = "http://localhost:4200") // allows requests from all domains
 public class TrackerController {
 
     private static Logger logger = LogManager.getLogger(TrackerController.class);
@@ -28,8 +46,8 @@ public class TrackerController {
     @Autowired
     private TrackerService trackerService;
     
-   // @Autowired
-    //private BollingerService bollingerService;
+    @Autowired
+    private BollingerService bollingerService;
 
     @ApiOperation(value = "findAll", nickname = "findAll")
     @RequestMapping(method = RequestMethod.GET)
@@ -95,12 +113,76 @@ public class TrackerController {
     	
         return ResponseEntity.status(HttpStatus.OK).body(jsonResponse.toString());
     }
+
+    //added request mappings for the search page.. 
+
+    @PostMapping("/portfolio/addToPortfolio")
+    public ResponseEntity<Stock> addStockToPortfolio(@RequestBody Stock stock) {
+        Stock addedStock = trackerService.addToPortfolio(stock);
+        return new ResponseEntity<>(addedStock, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/transaction/addTransaction")
+    public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction) {
+        Transaction addedTransaction = trackerService.addTransaction(transaction);
+        return new ResponseEntity<>(addedTransaction, HttpStatus.CREATED);
+    }
     
-    // bollinger methods
     
-    /*@RequestMapping(method = RequestMethod.POST, value = "/calculate-bollinger")
-    public BollingerBands calculateBollingerBands(@RequestBody TimeSeriesData timeSeriesData) {
+    @RequestMapping(method = RequestMethod.POST, value = "/calculate-bollinger")
+    public SortedMap<Date, BollingerBands>  calculateBollingerBands(@RequestBody JSONObject requestData){
         // Implement your Bollinger Bands calculation logic here using the timeSeriesData
         // Return the BollingerBandsResult
-    }*/
+    	
+      
+    	System.out.print(requestData.size());
+    	Iterator<String> keys = requestData.keySet().iterator();
+    	
+    	//String key = keys.next();
+    	Map<Date, BollingerData> timeSeries = new HashMap<Date, BollingerData>();
+    	
+    	
+    	while (keys.hasNext()) {
+    		
+    		String key = keys.next();
+    		
+    		BollingerData dataPoint = new BollingerData();
+    		LinkedHashMap<String, String> innerData = (LinkedHashMap<String, String>) requestData.get(key);
+    		
+    		String open = (String) innerData.get("open");
+    		String close = (String) innerData.get("close");
+    		String high = (String) innerData.get("high");
+    		String low = (String) innerData.get("low");
+    		String volume = (String) innerData.get("volume");
+    		
+    		dataPoint.setOpen(open);
+    		dataPoint.setClose(close);
+    		dataPoint.setHigh(high);
+    		dataPoint.setLow(low);
+    		dataPoint.setVolume(volume);
+    		
+    		String pattern = "yyyy-MM-dd"; // The pattern should match the format of your date string
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+    		
+            Date date;
+			try {
+				date = dateFormat.parse(key);
+				timeSeries.put(date, dataPoint);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		
+    					
+    	}
+    	
+    	TimeSeriesData data = new TimeSeriesData();
+    	data.setTimeSeries(timeSeries);
+    	
+    	SortedMap<Date, BollingerBands> bands = bollingerService.calculateBollingerBands(data);
+    	
+    	return bands;
+    }
 }

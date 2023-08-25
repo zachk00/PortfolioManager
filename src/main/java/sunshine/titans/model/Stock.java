@@ -9,69 +9,44 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-@Entity @Table(name="portfolio")//table name
+@Entity
+@Table(name = "portfolio")
 public class Stock implements Serializable {
 
-
-    @Override
-	public String toString() {
-		return "Stock [id=" + id + ", ticker=" + ticker + ", purchasePrice=" + purchasePrice + ", quantity=" + quantity
-				+ "]";
-	}
-
-	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-    private Integer id;
-    
-    @Column(name="ticker")
+    @Id
+    @Column(name = "ticker")
     private String ticker;
-    
-    @Column(name="purchasePrice")
-    private Double purchasePrice;
-    
-    @Column(name="quantity")
+
+    @Column(name = "quantity")
     private Integer quantity;
-    
-    public Stock() {}
-    
-    public Stock(String ticker, double purchasePrice, int quantity) {
-    	this.ticker = ticker;
-    	this.purchasePrice = purchasePrice;
-    	this.quantity = quantity;
+
+    @Column(name = "total_investment")
+    private BigDecimal totalInvestment;
+
+    // Getters and setters
+    public String getTicker() {
+        return ticker;
     }
 
-	public Integer getId() {
-		return id;
-	}
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-	public String getTicker() {
-		return ticker;
-	}
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
-	public void setTicker(String ticker) {
-		this.ticker = ticker;
-	}
+    public BigDecimal getTotalInvestment() {
+        return totalInvestment;
+    }
 
-	public Double getPurchasePrice() {
-		return purchasePrice;
-	}
-
-	public void setPurchasePrice(Double purchasePrice) {
-		this.purchasePrice = purchasePrice;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-    
+    public void setTotalInvestment(BigDecimal totalInvestment) {
+        this.totalInvestment = totalInvestment;
+    }
 }

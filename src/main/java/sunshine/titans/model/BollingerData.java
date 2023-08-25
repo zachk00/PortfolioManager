@@ -6,6 +6,13 @@ public class BollingerData {
     private String low;
     private String close;
     private String volume;
+    
+    
+	@Override
+	public String toString() {
+		return "BollingerData [open=" + open + ", high=" + high + ", low=" + low + ", close=" + close + ", volume="
+				+ volume + "]\n";
+	}
 	public String getOpen() {
 		return open;
 	}

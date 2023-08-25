@@ -1,17 +1,19 @@
 package sunshine.titans.model;
 
+import java.util.Date;
 import java.util.Map;
 
 public class TimeSeriesData {
-    private Map<String, BollingerData> timeSeries;
+    private Map<Date, BollingerData> timeSeries;
 
-	public Map<String, BollingerData> getTimeSeries() {
+	public Map<Date, BollingerData> getTimeSeries() {
 		return timeSeries;
 	}
 
-	public void setTimeSeries(Map<String, BollingerData> timeSeries) {
+	public void setTimeSeries(Map<Date, BollingerData> timeSeries) {
 		this.timeSeries = timeSeries;
 	}
+	
 
     
 }
