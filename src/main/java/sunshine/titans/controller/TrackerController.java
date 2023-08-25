@@ -99,12 +99,25 @@ public class TrackerController {
         Stock addedStock = service.addToPortfolio(stock);
         return new ResponseEntity<>(addedStock, HttpStatus.CREATED);
     }
+    //sell stock mapping for home page
+
+    @PutMapping("/portfolio/sellFromPortfolio")
+    public ResponseEntity<Stock> sellFromPortfolio(@RequestBody Stock stock) {
+
+        Stock soldStock = service.sellFromPortfolio(stock);
+        return new ResponseEntity<>(soldStock, HttpStatus.CREATED);
+    }
+    
 
     @PostMapping("/transaction/addTransaction")
     public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction) {
         Transaction addedTransaction = service.addTransaction(transaction);
         return new ResponseEntity<>(addedTransaction, HttpStatus.CREATED);
     }
-    
+     @PostMapping("/transaction/sellTransaction")
+    public ResponseEntity<Transaction> sellTransaction(@RequestBody Transaction transaction) {
+        Transaction addedTransaction = service.addTransaction(transaction);
+        return new ResponseEntity<>(addedTransaction, HttpStatus.CREATED);
+    }
     
 }

@@ -8,5 +8,5 @@ import sunshine.titans.model.Stock;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer> {
 
-	public Iterable<Stock> findByTicker(String ticker);
+	Stock findByTicker(String ticker);
 }

@@ -31,7 +31,10 @@ public interface TrackerService {
 	// new routes are needed for update, delete, and todo services
 	Stock addToPortfolio(Stock stock);
 
+	Stock sellFromPortfolio(Stock stock);
+
     Transaction addTransaction(Transaction transaction);
+	Transaction sellTransaction(Transaction transaction);
 	
 	// new Backend services
 	
