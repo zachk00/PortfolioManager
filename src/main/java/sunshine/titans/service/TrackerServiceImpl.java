@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import sunshine.titans.model.BollingerBands;
 import sunshine.titans.model.Stock;
+import sunshine.titans.model.TimeSeriesData;
 import sunshine.titans.model.Transaction;
 import sunshine.titans.model.WatchlistStock;
 import sunshine.titans.repo.StockRepository;
@@ -96,7 +98,6 @@ public class TrackerServiceImpl implements TrackerService {
 
 	}
 
-	// logic for buying stock , saving to transaction.
 	@Override
 	public Stock addToPortfolio(Stock stock) {
 		Stock existingStock = stockDAO.findByTicker(stock.getTicker());
