@@ -13,7 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import sunshine.titans.model.Stock;
+import sunshine.titans.model.Transaction;
 import sunshine.titans.repo.StockRepository;
+import sunshine.titans.repo.TransactionRepository;
+import sunshine.titans.repo.WatchlistRepository;
+import sunshine.titans.service.BollingerService;
 import sunshine.titans.service.TrackerService;
 
 import java.util.ArrayList;
@@ -45,17 +49,30 @@ public class TestTrackerController {
     protected static class Config {
         @Bean
         @Primary
-        public StockRepository repo() {
+        public StockRepository stockRepo() {
             return mock(StockRepository.class);
         }
-
+        
         @Bean
         @Primary
-        public TrackerService service() {
+        public WatchlistRepository watchlistRepo() {
+            return mock(WatchlistRepository.class);
+        }
+        
+        @Bean
+        @Primary
+        public TransactionRepository transactionRepo() {
+            return mock(TransactionRepository.class);
+        }
+        
+        @Bean
+        @Primary
+        public TrackerService trackerService() {
             Stock stock = new Stock();
             List<Stock> stocks = new ArrayList<>();
             stocks.add(stock);
-
+            
+            
             TrackerService service = mock(TrackerService.class);
             when(service.getPortfolio()).thenReturn(stocks);
             when(service.getStockById(1)).thenReturn(stock);
@@ -64,6 +81,14 @@ public class TestTrackerController {
 
         }
 
+        @Bean
+        @Primary
+        public BollingerService bollingerService() {
+        	BollingerService service = mock(BollingerService.class);
+        	
+        	return service;
+        }
+        
         @Bean
         @Primary
         public TrackerController controller() {

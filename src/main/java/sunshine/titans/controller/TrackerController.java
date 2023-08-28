@@ -174,7 +174,7 @@ public class TrackerController {
     		dataPoint.setLow(low);
     		dataPoint.setVolume(volume);
     		
-    		String pattern = "yyyy-MM-dd"; // The pattern should match the format of your date string
+    		String pattern = "yyyy-MM-dd"; 
 
             SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
     		
